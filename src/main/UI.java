@@ -74,6 +74,16 @@ public class UI {
     public int currentDialoguePage = 0; // Current page of dialogue
     public List<List<String>> dialoguePages = new ArrayList<>(); // List of pages, each containing lines
 
+    public static final int GAMESTATE_TITLE = 0;
+    public static final int GAMESTATE_PAUSE = 1;
+    public static final int GAMESTATE_SAVE_MENU = 2;
+    public static final int GAMESTATE_CONFIRM_OVERWRITE = 3;
+    public static final int GAMESTATE_LOAD_MENU = 4;
+    public static final int GAMESTATE_LOAD_FAILED = 5;
+
+    public int gameState = GAMESTATE_TITLE;
+    public int selectedSaveSlot = -1;
+
     public UI(GamePanel gp) {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
@@ -164,8 +174,18 @@ public class UI {
         if (gp.gameState == gp.craftingState) {
             drawCraftingScreen();
         }
+        //f (gp.gameState == GAMESTATE_SAVE_MENU) {
+        //    drawSaveMenu(g2);
+        //} else if (gp.gameState == GAMESTATE_CONFIRM_OVERWRITE) {
+        //   drawOverwriteConfirmation(g2);
+        //}
+        //else if (gp.gameState == GAMESTATE_LOAD_MENU) {
+        //    drawLoadMenu(g2);
+        //} else if (gp.gameState == GAMESTATE_LOAD_FAILED) {
+        //    drawLoadFailed(g2);
+        //}
 
-        drawMessage();
+        //drawMessage();
     }
 
     private void drawCraftingScreen() 
@@ -1112,5 +1132,17 @@ public class UI {
         fpsY = gp.screenHeight - 100;
         g2.drawString(FPSText, fpsX, fpsY);
     }
+
+    public void drawOverwriteConfirmation(Graphics2D g2) {
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(25F));
+
+        g2.drawString("This slot already has a save.", 100, 150);
+        g2.drawString("Do you want to overwrite it?", 100, 190);
+        g2.drawString("Y - Yes      N - No", 100, 240);
+    }
+    
 
 }

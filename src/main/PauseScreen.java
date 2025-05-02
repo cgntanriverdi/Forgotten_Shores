@@ -121,7 +121,7 @@ public class PauseScreen extends JDialog{
     class SaveListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            gp.saveStorage.saveGame();
+            new SaveSlotWindow(gp);
         }
         
     }

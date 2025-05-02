@@ -37,7 +37,7 @@ public class KeyHandler implements KeyListener, MouseListener {
     }
 
     public void keyTyped(KeyEvent e) {
-        // TODO
+        // Not used
     }
 
     public void keyPressed(KeyEvent e) {
@@ -116,7 +116,7 @@ public class KeyHandler implements KeyListener, MouseListener {
             leftArrowPressed = true;
         }
     }
-
+    
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
 

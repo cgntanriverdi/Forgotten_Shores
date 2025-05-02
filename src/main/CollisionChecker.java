@@ -1,8 +1,10 @@
 package main;
 
+import java.io.Serializable;
+
 import entity.Entity;
 
-public class CollisionChecker {
+public class CollisionChecker implements Serializable {
     GamePanel gp;
 
     public CollisionChecker(GamePanel aGP) {

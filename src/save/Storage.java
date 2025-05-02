@@ -9,7 +9,7 @@ public class Storage implements Serializable{
     
     int health;
     int hunger;
-
+    int day;
     int level;
     int strength;
     int dexterity;

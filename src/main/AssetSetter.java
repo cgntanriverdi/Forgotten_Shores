@@ -1,5 +1,7 @@
 package main;
 
+import java.io.Serializable;
+
 import entity.Entity;
 import entity.NPC_Mysterious_Stranger;
 import monster.MON_Island_Native;
@@ -7,13 +9,13 @@ import monster.MON_Pig;
 import object.*;
 import tile_interactive.IT_DryTree;
 
-public class AssetSetter {
+public class AssetSetter implements Serializable{
 
     GamePanel gp;
     int objectCounter = 0;
     int iTileCounter = 0;
 
-    public AssetSetter(GamePanel gp) {
+    public AssetSetter(GamePanel gp){
         this.gp = gp;
     }
 

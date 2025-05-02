@@ -1,12 +1,14 @@
 package main;
 
+import java.io.Serializable;
+
 import object.Item;
 
-public class Inventory 
+public class Inventory implements Serializable
 {
     private Item[] slots = new Item[5]; // 5 inventory slots
     private int selectedSlot = 0;
-    private GamePanel gp;
+    private transient GamePanel gp;
 
     public Inventory(GamePanel gp) 
     {

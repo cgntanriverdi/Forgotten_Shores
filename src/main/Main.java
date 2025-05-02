@@ -13,7 +13,7 @@ public class Main {
     }
 
     // This static method creates and shows the game window.
-    public static void startGame() {
+    public static void startGame(boolean startWithLoadMenu) {
         frame = new JFrame("Forgotten Shores");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -21,6 +21,11 @@ public class Main {
                                     // parameter to false.
 
         GamePanel gamePanel = new GamePanel();
+
+        if (startWithLoadMenu) {
+            gamePanel.gameState = UI.GAMESTATE_LOAD_MENU;
+        }
+
         frame.add(gamePanel);
 
         frame.pack();
@@ -30,14 +35,15 @@ public class Main {
         gamePanel.startGameThread();
     }
 
-    public static void loadGame() {
+    public static void startGameFromSlot(int slot) {
         frame = new JFrame("Forgotten Shores");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setUndecorated(true);
 
         GamePanel gamePanel = new GamePanel();
-        gamePanel.saveStorage.loadGame();
+        gamePanel.saveStorage.loadGame(slot);
+
         frame.add(gamePanel);
 
         frame.pack();
@@ -46,4 +52,5 @@ public class Main {
 
         gamePanel.startGameThread();
     }
+
 }

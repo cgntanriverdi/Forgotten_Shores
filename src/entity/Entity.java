@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
+
 import main.GamePanel;
 import monster.MON_Island_Native;
 import monster.MON_Pig;
 import object.OBJ_RAW_MEAT;
 
-public class Entity {
+public class Entity implements Serializable {
     public GamePanel gp;
     public int worldX; // x-coordinate of entity
     public int worldY; // y-coordinate of entity
@@ -20,13 +22,13 @@ public class Entity {
 
     public int hp; // For monsters (for now)
 
-    public BufferedImage up1, up2, up3, up4, down1, down2, down3, down4, left1, left2, left3, left4, right1, right2,
+    public transient BufferedImage up1, up2, up3, up4, down1, down2, down3, down4, left1, left2, left3, left4, right1, right2,
             right3, right4, idle1, idle2, idle3, idle4, attackUp1, attackUp2, attackLeft1, attackLeft2, attackDown1,
             attackDown2, attackRight1, attackRight2; // representing the images which will swap during movement & idle
                                                      // animations & attack animations
     public String direction; // where entity looks
 
-    public BufferedImage scaledUp1, scaledUp2, scaledDown1, scaledDown2,
+    public transient BufferedImage scaledUp1, scaledUp2, scaledDown1, scaledDown2,
             scaledLeft1, scaledLeft2, scaledRight1, scaledRight2,
             scaledIdle1, scaledIdle2, scaledIdle3, scaledIdle4,
             scaledAttackUp1, scaledAttackUp2, scaledAttackDown1, scaledAttackDown2,
@@ -36,8 +38,8 @@ public class Entity {
     public int spriteCounter = 0; //
     public int spriteNum = 1; // for example: is it up1 or up2
 
-    public Rectangle solidArea; // part that cannot colide
-    public Rectangle attackArea;
+    public transient Rectangle solidArea; // part that cannot colide
+    public transient Rectangle attackArea;
     public int solidAreaDefaultX;
     public int solidAreaDefaultY;
     public boolean collisionOn = false;

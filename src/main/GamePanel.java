@@ -580,5 +580,15 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         // aSetter.setInteractiveTile();
     }
+    
+    public void handleSaveSlot(int slot) {
+        if (saveStorage.isSlotOccupied(slot)) {
+            ui.selectedSaveSlot = slot;
+            gameState = UI.GAMESTATE_CONFIRM_OVERWRITE;
+        } else {
+            saveStorage.saveGame(slot);
+            gameState = UI.GAMESTATE_PAUSE;
+        }
+    }
 
 }

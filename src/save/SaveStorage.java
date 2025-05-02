@@ -1,10 +1,8 @@
 package save;
 
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
+
+import environment.Lighting;
 import main.GamePanel;
 
 public class SaveStorage {
@@ -14,10 +12,13 @@ public class SaveStorage {
         this.gp = gp;
     }
 
-    @SuppressWarnings("resource")
-    public void saveGame() {
-        try {
-            ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File("data.dat")));
+    private String getSlotFileName(int slot) {
+        return "save_slot_" + slot + ".dat";
+    }
+
+    public void saveGame(int slot) {
+        try (ObjectOutputStream stream = new ObjectOutputStream(
+                new FileOutputStream(new File(getSlotFileName(slot))))) {
 
             Storage stor = new Storage();
 
@@ -30,24 +31,25 @@ public class SaveStorage {
             stor.exp = gp.player.getExp();
             stor.expToNextLevel = gp.player.getExpToNextLevel();
             stor.coin = gp.player.getCoin();
-            // stor.currentWeapon = gp.player.getCurrentWeapon();
-            // stor.currentShield = gp.player.getCurrentShield();
+
+            stor.currentWeapon = gp.player.getCurrentWeapon();
+            stor.currentShield = gp.player.getCurrentShield();
+            stor.inventory = gp.player.inventory;
 
             stor.defense = gp.player.getDefense();
             stor.attack = gp.player.getAttack();
 
-            // stor.inventory = gp.player.inventory;
+            stor.day = Lighting.currentDay; // GÜN sayısını göstermek için (eğer gp.day varsa)
+
             stream.writeObject(stor);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    @SuppressWarnings("resource")
-    public void loadGame() {
-        try {
-            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File("data.dat")));
+    public void loadGame(int slot) {
+        try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(getSlotFileName(slot))))) {
 
             Storage s = (Storage) stream.readObject();
 
@@ -60,14 +62,31 @@ public class SaveStorage {
             gp.player.setExp(s.exp);
             gp.player.setExpToNextLevel(s.expToNextLevel);
             gp.player.setCoin(s.coin);
-            // gp.player.setCurrentWeapon(s.currentWeapon);
-            // gp.player.setCurrentShield(s.currentShield);
+
+            gp.player.setCurrentWeapon(s.currentWeapon);
+            gp.player.setCurrentShield(s.currentShield);
+            gp.player.setInventory(s.inventory);
 
             gp.player.setDefense(s.defense);
             gp.player.setAttack(s.attack);
-            // gp.player.setInventory(s.inventory);
+
+            Lighting.currentDay = s.day;
+
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean isSlotOccupied(int slot) {
+        return new File(getSlotFileName(slot)).exists();
+    }
+
+    public int getDayOfSlot(int slot) {
+        try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(getSlotFileName(slot))))) {
+            Storage s = (Storage) stream.readObject();
+            return s.day;
+        } catch (Exception e) {
+            return -1; // Dosya yoksa veya hata varsa
         }
     }
 }

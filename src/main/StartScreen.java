@@ -48,17 +48,18 @@ public class StartScreen extends JFrame {
             // Dispose the start screen
             dispose();
             // Launch the game frame using the Main class's static method
-            Main.startGame();
+            Main.startGame(false);
         }
     }
     
     class ClickListener2 implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Main.loadGame();
+            new LoadSlotWindow(StartScreen.this).setVisible(true);
+
         }
-        
     }
+
     class ClickListener3 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             new CreditScreen(StartScreen.this , retroFont);
